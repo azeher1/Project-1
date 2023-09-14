@@ -1,0 +1,46 @@
+---
+title: "Project 1"
+output: html_document
+date: "2023-09-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+#Packages
+```{r}
+library(tidyverse)
+
+```
+
+# Downloading Data
+```{r}
+tuesdata <- tidytuesdayR::tt_load("2022-01-18")
+chocolate <- tuesdata$chocolate
+as_tibble(chocolate)
+glimpse(chocolate)
+```
+
+## Part 1: Exploring Data
+# 1. Make a histogram of the rating scores to visualize the overall distribution of scores. Change the number of bins from the default to 10, 15, 20, and 25. Pick on the one that you think looks the best. Explain what the difference is when you change the number of bins and explain why you picked the one you did.
+```{r}
+qplot(rating, data=chocolate, bins = 10)
+qplot(rating, data=chocolate, bins = 15)
+qplot(rating, data=chocolate, bins = 20)
+qplot(rating, data=chocolate, bins = 25)
+
+#The one that looks the best
+qplot(rating, data=chocolate, bins = 25)
+```
+
+Changing the bin number resulted in a separation the data into more categories. In essence, a higher bin number allowed for more categories of ratings, and subsequently, spread out the ratings in the histogram. I chose the graph with a bin number of 25 because it allowed me to see more of the data, since the bins themselves were smaller and there were more of them. I also liked the aesthetic look of the plot the best. 
+
+# Consider the countries where the beans originated from. How many reviews come from each country of bean origin?
+```{r}
+chocolate %>%
+  group_by(country_of_bean_origin) %>%
+  count(chocolate$country_of_bean_origin)
+```
+
